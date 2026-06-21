@@ -16,5 +16,10 @@ fi
 export FUSEKI_BASE="$REPO_ROOT/tools/fuseki-base"
 mkdir -p "$FUSEKI_BASE"
 
-echo "Starting Fuseki — endpoint: http://localhost:3030/hospital"
-exec "$FUSEKI_HOME/fuseki-server" --mem --update /hospital
+# Persistent TDB2 dataset on disk, so loaded triples survive a restart.
+# The directory is regenerable from the .ttl files, so it is gitignored.
+DB_DIR="$REPO_ROOT/tools/fuseki-db/hospital"
+mkdir -p "$DB_DIR"
+
+echo "Starting Fuseki — endpoint: http://localhost:3030/hospital (TDB2: $DB_DIR)"
+exec "$FUSEKI_HOME/fuseki-server" --tdb2 --loc="$DB_DIR" --update /hospital

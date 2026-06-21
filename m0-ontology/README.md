@@ -13,7 +13,7 @@ with SPARQL.
 | `ontology/hospital-ontology.ttl` | The **TBox** — classes, object properties, and the max-cardinality rule (the *types* and *rules*). |
 | `data/hospital-data.ttl` | The **ABox** — instances: 3 wards, 10 beds, 5 synthetic patients (the *individuals*). |
 | `queries/free-beds-in-ward.rq` | The deliverable SPARQL query: free beds in a named ward. |
-| `serve.sh` | Start Fuseki with an in-memory `/hospital` dataset. |
+| `serve.sh` | Start Fuseki with a **persistent** (TDB2 on-disk) `/hospital` dataset. |
 | `load.sh` | Upload the ontology + data into the running dataset. |
 | `query.sh` | Run the free-beds query against the live endpoint. |
 
@@ -114,7 +114,17 @@ Crucially, OWL's open-world reasoning *detects* that contradiction; it does not
 which is exactly what **Module 2** adds with SHACL behind a FastAPI action. M0
 establishes the model; M2 enforces it.
 
+## Persistence
+
+The dataset is a **persistent TDB2 store** on disk at
+`tools/fuseki-db/hospital/` (regenerable from the `.ttl` files, so gitignored).
+Loaded triples survive a server restart — `load.sh` is needed only once (or
+after you change the source data). `load.sh` clears the default graph before
+loading, so it is idempotent: re-running keeps the count at 88. Later modules
+(M1 onward) write into this same persistent store.
+
+To start fresh, stop Fuseki and `rm -rf tools/fuseki-db`.
+
 ## Stopping Fuseki
 
-The dataset is in-memory, so stopping the server discards data; re-run
-`load.sh` after the next `serve.sh`. If started via `serve.sh`, press Ctrl-C.
+If started via `serve.sh`, press Ctrl-C. Data remains on disk for the next start.

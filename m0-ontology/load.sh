@@ -8,6 +8,9 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ENDPOINT="${FUSEKI_ENDPOINT:-http://localhost:3030/hospital}"
 
 echo "Loading ontology + data into $ENDPOINT (default graph) ..."
+# Clear first so re-running against the persistent store stays idempotent.
+curl -fsS -X POST -H 'Content-Type: application/sparql-update' \
+     --data 'DROP DEFAULT' "$ENDPOINT/update" >/dev/null
 curl -fsS -X POST -H 'Content-Type: text/turtle' \
      --data-binary "@$DIR/ontology/hospital-ontology.ttl" \
      "$ENDPOINT/data?default" >/dev/null
