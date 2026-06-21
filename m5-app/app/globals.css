@@ -1,0 +1,90 @@
+:root {
+  --bg: #0f1420;
+  --panel: #1a2233;
+  --panel-2: #222c42;
+  --line: #2e3a52;
+  --text: #e6ebf5;
+  --muted: #8a97b1;
+  --free: #2fae66;
+  --free-bg: #16321f;
+  --occ: #d9762b;
+  --occ-bg: #33230f;
+  --accent: #5a8dee;
+  --danger: #e2557a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 28px 22px 60px; }
+
+header.top { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+h1 { font-size: 22px; margin: 0; }
+.sub { color: var(--muted); font-size: 13px; }
+
+.controls { display: flex; align-items: center; gap: 10px; margin: 18px 0 22px; flex-wrap: wrap; }
+.controls label { color: var(--muted); font-size: 13px; }
+select, input, button { font: inherit; }
+select, input {
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 10px;
+}
+button {
+  background: var(--accent); color: white; border: 0; border-radius: 8px;
+  padding: 8px 12px; cursor: pointer;
+}
+button.secondary { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+.scope-pill {
+  margin-left: auto; background: var(--panel-2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--muted);
+}
+.scope-pill b { color: var(--accent); }
+
+.summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 22px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.card .ward { font-weight: 600; }
+.card .nums { display: flex; gap: 14px; margin-top: 8px; font-size: 13px; }
+.card .nums .free { color: var(--free); }
+.card .nums .occ { color: var(--occ); }
+.bar { height: 6px; background: var(--occ-bg); border-radius: 4px; margin-top: 10px; overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--free); }
+
+.banner { padding: 11px 14px; border-radius: 10px; margin-bottom: 16px; font-size: 14px; }
+.banner.err { background: #36172380; border: 1px solid var(--danger); color: #ffc6d6; }
+.banner.ok { background: var(--free-bg); border: 1px solid var(--free); color: #b7f0cd; }
+
+.ward-group { margin-bottom: 22px; }
+.ward-group h2 { font-size: 15px; color: var(--muted); font-weight: 600; margin: 0 0 10px; }
+.beds { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.bed { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.bed.free { border-left: 3px solid var(--free); }
+.bed.occ  { border-left: 3px solid var(--occ); }
+.bed .code { font-weight: 600; }
+.bed .state { font-size: 12px; margin: 2px 0 8px; }
+.bed.free .state { color: var(--free); }
+.bed.occ .state { color: var(--occ); }
+.bed .occupant { font-size: 12px; color: var(--muted); margin-bottom: 8px; word-break: break-all; }
+.bed button { width: 100%; padding: 6px; font-size: 13px; }
+.bed .discharge { background: var(--occ); }
+
+.admit-row { display: flex; gap: 6px; }
+.admit-row input { flex: 1; min-width: 0; padding: 6px 8px; }
+.admit-row button { width: auto; padding: 6px 10px; }
+
+.agent { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 8px; }
+.agent h2 { margin: 0 0 4px; font-size: 16px; }
+.agent .hint { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+.agent .ask-row { display: flex; gap: 8px; }
+.agent .ask-row input { flex: 1; }
+.agent .answer { margin-top: 12px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+.agent .answer .meta { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+.agent pre { background: #0c111c; border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow: auto; font-size: 12px; color: #b8c6e6; }
+.muted { color: var(--muted); }

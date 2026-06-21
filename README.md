@@ -21,7 +21,7 @@ Build context & rules: [`CLAUDE.md`](CLAUDE.md).
 | [M2 — Validation & Actions](m2-actions/) | Kinetic | SHACL + FastAPI | ✅ done |
 | [M3 — Dynamic Security](m3-security/) | Per-object security | OPA + Rego | ✅ done |
 | [M4 — AI Layer](m4-ai/) | Grounded AI | Ollama + LangChain | ✅ done |
-| M5 — Application | Presentation | Streamlit / Next.js | ⬜ |
+| [M5 — Application](m5-app/) | Presentation | Next.js + TypeScript | ✅ done |
 | M6 — Infra & Delivery | Substrate + GitOps | k3d + Argo CD | ⬜ |
 | Capstone | Scale & reflect | DuckDB → Spark | ⬜ |
 
