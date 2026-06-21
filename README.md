@@ -20,7 +20,7 @@ Build context & rules: [`CLAUDE.md`](CLAUDE.md).
 | [M1 — Compute & Ingestion](m1-ingestion/) | Data plane | dbt + DuckDB → triplestore | ✅ done |
 | [M2 — Validation & Actions](m2-actions/) | Kinetic | SHACL + FastAPI | ✅ done |
 | [M3 — Dynamic Security](m3-security/) | Per-object security | OPA + Rego | ✅ done |
-| M4 — AI Layer | Grounded AI | Ollama + LangChain | ⬜ |
+| [M4 — AI Layer](m4-ai/) | Grounded AI | Ollama + LangChain | ✅ done |
 | M5 — Application | Presentation | Streamlit / Next.js | ⬜ |
 | M6 — Infra & Delivery | Substrate + GitOps | k3d + Argo CD | ⬜ |
 | Capstone | Scale & reflect | DuckDB → Spark | ⬜ |

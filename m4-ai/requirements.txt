@@ -1,0 +1,8 @@
+# Module 4 — AI Layer
+# Install into the repo venv (Python 3.12): pip install -r requirements.txt
+# Also requires a local Ollama with the model pulled (see README).
+langchain>=1.0
+langchain-community>=0.3
+langchain-ollama>=0.2
+rdflib>=7,<8
+requests>=2.31
