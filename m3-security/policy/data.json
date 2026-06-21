@@ -1,0 +1,8 @@
+{
+  "users": {
+    "manager_carol": { "role": "bed_manager" },
+    "nurse_alice":   { "role": "ward_nurse", "ward": "Ward A" },
+    "nurse_bob":     { "role": "ward_nurse", "ward": "Ward B" },
+    "nurse_dora":    { "role": "ward_nurse", "ward": "ICU" }
+  }
+}

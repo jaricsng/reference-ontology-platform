@@ -10,10 +10,11 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
 
 from . import audit
+from .authz import decide
 from .shacl_check import validate_graph
 from .sparql import (HOSP, ask, bed_uri, current_occupancy_graph,
                      patient_id_from_uri, patient_uri, ping, select, update)
@@ -42,11 +43,10 @@ def health():
     return {"status": "ok", "fuseki": "up"}
 
 
-@app.get("/beds")
-def beds(ward: str | None = None):
-    """Current bed occupancy. (Module 3 will scope this per role.)"""
-    # `ward` is untrusted input — escape it as a SPARQL literal (see _q) to
-    # avoid query injection.
+def _query_beds(ward: str | None) -> list[dict]:
+    """Bed occupancy, optionally scoped to one ward. `ward` is escaped as a
+    SPARQL literal (see _q) — it is untrusted whether it comes from a query
+    param or from the OPA ward filter."""
     flt = 'FILTER(?ward = ?wardFilter)' if ward else ""
     binding = f'VALUES ?wardFilter {{ {_q(ward)} }}' if ward else ""
     rows = select(f"""
@@ -67,7 +67,27 @@ def beds(ward: str | None = None):
             "occupant_id": patient_id_from_uri(r["occupantUri"]["value"]) if occ else None,
             "occupant_name": r["occupantName"]["value"] if "occupantName" in r else None,
         })
+    return out
+
+
+@app.get("/beds")
+def beds(ward: str | None = None):
+    """Current bed occupancy — unscoped. See /secure/beds for the role-scoped view."""
+    out = _query_beds(ward)
     return {"count": len(out), "beds": out}
+
+
+@app.get("/secure/beds")
+def secure_beds(x_user: str = Header(default="", alias="X-User"),
+                ward: str | None = None):
+    """Role-scoped bed occupancy. Consults OPA (Module 3) for an allow/deny
+    decision and a ward filter, then injects that filter into the query."""
+    d = decide(x_user, ward or "")
+    if not d.get("allow"):
+        raise HTTPException(403, f"Access denied for user '{x_user}'")
+    ward_filter = d.get("ward_filter") or None
+    out = _query_beds(ward_filter)
+    return {"user": x_user, "role_scope": ward_filter or "ALL", "count": len(out), "beds": out}
 
 
 @app.post("/admit")
