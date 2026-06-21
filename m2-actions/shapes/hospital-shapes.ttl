@@ -1,0 +1,33 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix :     <http://example.org/hospital#> .
+
+#################################################################
+#  SHACL shapes — the closed-world business rules the platform
+#  enforces at write time (Module 2).
+#
+#  OWL (M0) *describes* valid states; it cannot stop a bad write.
+#  SHACL validates a concrete graph against constraints, so we run
+#  it on the *proposed* graph before committing an action.
+#
+#  Targets use sh:targetSubjectsOf / sh:targetObjectsOf so the rules
+#  fire on the occupancy triples directly (no rdf:type needed).
+#################################################################
+
+# Rule 1: a patient cannot occupy more than one bed.
+:PatientSingleBedShape a sh:NodeShape ;
+    sh:targetSubjectsOf :occupiesBed ;
+    sh:property [
+        sh:path     :occupiesBed ;
+        sh:maxCount 1 ;
+        sh:message  "A patient cannot occupy more than one bed." ;
+    ] .
+
+# Rule 2: a bed cannot be occupied by more than one patient
+#         (i.e. you cannot admit to an already-occupied bed).
+:BedSinglePatientShape a sh:NodeShape ;
+    sh:targetObjectsOf :occupiesBed ;
+    sh:property [
+        sh:path        [ sh:inversePath :occupiesBed ] ;
+        sh:maxCount    1 ;
+        sh:message     "A bed cannot be occupied by more than one patient (bed is already occupied)." ;
+    ] .
