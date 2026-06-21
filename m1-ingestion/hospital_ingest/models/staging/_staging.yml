@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_admissions
+    description: "Cleaned, type-cast, deduplicated admission events (one row per admission_id)."
+    columns:
+      - name: admission_id
+        description: "Unique after dedupe — proves the staging dedupe works."
+        tests: [unique, not_null]
+      - name: patient_id
+        tests: [not_null]
+      - name: admitted_at
+        tests: [not_null]

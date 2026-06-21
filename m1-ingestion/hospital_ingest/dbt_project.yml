@@ -1,0 +1,16 @@
+name: 'hospital_ingest'
+version: '1.0.0'
+config-version: 2
+
+profile: 'hospital_ingest'
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  hospital_ingest:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

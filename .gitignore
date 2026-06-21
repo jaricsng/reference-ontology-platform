@@ -12,6 +12,10 @@ __pycache__/
 target/
 dbt_packages/
 logs/
+.user.yml
+
+# Generated synthetic data (regenerable via generate_admissions.py)
+m1-ingestion/data/raw/*.csv
 
 # Downloaded tooling & runtime state (not source)
 tools/

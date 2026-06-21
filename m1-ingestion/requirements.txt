@@ -1,0 +1,6 @@
+# Module 1 — Compute & Ingestion
+# Install into the repo venv (Python 3.12):  pip install -r requirements.txt
+dbt-duckdb>=1.10,<2
+duckdb>=1.0
+rdflib>=7,<8
+requests>=2.31

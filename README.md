@@ -17,7 +17,7 @@ Build context & rules: [`CLAUDE.md`](CLAUDE.md).
 | Module | Layer | Stack | Status |
 |--------|-------|-------|--------|
 | [M0 — Domain & Ontology](m0-ontology/) | Semantic model | OWL/RDF + Fuseki + SPARQL | ✅ done |
-| M1 — Compute & Ingestion | Data plane | dbt + DuckDB → triplestore | ⬜ |
+| [M1 — Compute & Ingestion](m1-ingestion/) | Data plane | dbt + DuckDB → triplestore | ✅ done |
 | M2 — Validation & Actions | Kinetic | SHACL + FastAPI | ⬜ |
 | M3 — Dynamic Security | Per-object security | OPA + Rego | ⬜ |
 | M4 — AI Layer | Grounded AI | Ollama + LangChain | ⬜ |

@@ -1,0 +1,43 @@
+@prefix :     <http://example.org/hospital#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+#  Admission properties — Module 1 extension to the M0 ontology.
+#
+#  The M0 ontology (m0-ontology/ontology/hospital-ontology.ttl)
+#  declares the :Admission *class*. This file adds the properties
+#  the ingestion pipeline needs to describe admission instances,
+#  keeping the M0 file frozen and verified.
+#################################################################
+
+:admissionPatient a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label   "admission patient" ;
+    rdfs:comment "The patient this admission concerns." ;
+    rdfs:domain  :Admission ;
+    rdfs:range   :Patient .
+
+:admissionBed a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label   "admission bed" ;
+    rdfs:comment "The bed this admission placed the patient in." ;
+    rdfs:domain  :Admission ;
+    rdfs:range   :Bed .
+
+:admittedAt a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label   "admitted at" ;
+    rdfs:comment "Timestamp the admission began." ;
+    rdfs:domain  :Admission ;
+    rdfs:range   xsd:dateTime .
+
+:dischargedAt a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label   "discharged at" ;
+    rdfs:comment "Timestamp the admission ended; absent while the admission is current." ;
+    rdfs:domain  :Admission ;
+    rdfs:range   xsd:dateTime .
+
+:admissionStatus a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label   "admission status" ;
+    rdfs:comment "'current' or 'discharged'." ;
+    rdfs:domain  :Admission ;
+    rdfs:range   xsd:string .

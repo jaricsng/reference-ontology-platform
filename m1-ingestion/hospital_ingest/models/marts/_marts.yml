@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_bed
+    description: "One row per bed, with its ward. Maps to :Bed / :inWard in the ontology."
+    columns:
+      - name: bed_code
+        description: "Bed identifier, e.g. ICU-3, A5."
+        tests: [unique, not_null]
+      - name: ward_name
+        tests: [not_null]
+
+  - name: dim_patient
+    description: "One row per distinct patient. Maps to :Patient."
+    columns:
+      - name: patient_id
+        description: "Synthetic patient id, e.g. SYN-P00042."
+        tests: [unique, not_null]
+
+  - name: fct_admission
+    description: "One row per cleaned admission event. Maps to :Admission."
+    columns:
+      - name: admission_id
+        tests: [unique, not_null]
+      - name: patient_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_patient')
+                field: patient_id
+      - name: bed_code
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_bed')
+                field: bed_code
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['current', 'discharged']

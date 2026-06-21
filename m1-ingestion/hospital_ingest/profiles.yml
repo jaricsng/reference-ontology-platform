@@ -1,0 +1,9 @@
+# dbt connection profile. Used with `dbt --profiles-dir .` from this folder.
+# DuckDB runs in-process; the database is a single local file (gitignored).
+hospital_ingest:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('M1_DUCKDB', 'hospital.duckdb') }}"
+      threads: 4
