@@ -23,7 +23,7 @@ Build context & rules: [`CLAUDE.md`](CLAUDE.md).
 | [M4 — AI Layer](m4-ai/) | Grounded AI | Ollama + LangChain | ✅ done |
 | [M5 — Application](m5-app/) | Presentation | Next.js + TypeScript | ✅ done |
 | [M6 — Infra & Delivery](m6-infra/) | Substrate + GitOps | k3d + Argo CD | ✅ done |
-| Capstone | Scale & reflect | DuckDB → Spark | ⬜ |
+| [Capstone](capstone/) | Scale & reflect | DuckDB → Spark | ✅ done |
 
 Each module folder has its own `README.md` with run + verify steps.
 

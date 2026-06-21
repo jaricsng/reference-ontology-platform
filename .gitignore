@@ -28,3 +28,4 @@ fuseki.pid
 
 # Audit log output (runtime; keep the dir, not the log)
 m2-actions/audit/*.jsonl
+capstone/output/
