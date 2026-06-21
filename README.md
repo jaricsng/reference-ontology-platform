@@ -22,7 +22,7 @@ Build context & rules: [`CLAUDE.md`](CLAUDE.md).
 | [M3 — Dynamic Security](m3-security/) | Per-object security | OPA + Rego | ✅ done |
 | [M4 — AI Layer](m4-ai/) | Grounded AI | Ollama + LangChain | ✅ done |
 | [M5 — Application](m5-app/) | Presentation | Next.js + TypeScript | ✅ done |
-| M6 — Infra & Delivery | Substrate + GitOps | k3d + Argo CD | ⬜ |
+| [M6 — Infra & Delivery](m6-infra/) | Substrate + GitOps | k3d + Argo CD | ✅ done |
 | Capstone | Scale & reflect | DuckDB → Spark | ⬜ |
 
 Each module folder has its own `README.md` with run + verify steps.

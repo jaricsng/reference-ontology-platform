@@ -1,0 +1,7 @@
+__pycache__
+*.pyc
+audit/*.jsonl
+Dockerfile
+.dockerignore
+README.md
+test_actions.py

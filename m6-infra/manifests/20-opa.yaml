@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opa-policy
+  namespace: hospital
+data:
+  authz.rego: |
+    package hospital.authz
+
+    import rego.v1
+
+    default decision := {"allow": false, "ward_filter": ""}
+
+    subject := data.users[input.user]
+
+    decision := {"allow": true, "ward_filter": ""} if {
+      subject.role == "bed_manager"
+    }
+
+    decision := {"allow": true, "ward_filter": subject.ward} if {
+      subject.role == "ward_nurse"
+      not requesting_other_ward
+    }
+
+    requesting_other_ward if {
+      input.ward != ""
+      input.ward != subject.ward
+    }
+  data.json: |
+    {
+      "users": {
+        "manager_carol": { "role": "bed_manager" },
+        "nurse_alice":   { "role": "ward_nurse", "ward": "Ward A" },
+        "nurse_bob":     { "role": "ward_nurse", "ward": "Ward B" },
+        "nurse_dora":    { "role": "ward_nurse", "ward": "ICU" }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa
+  namespace: hospital
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: opa }
+  template:
+    metadata:
+      labels: { app: opa }
+    spec:
+      containers:
+        - name: opa
+          image: openpolicyagent/opa:latest-rootless
+          imagePullPolicy: IfNotPresent
+          args: ["run", "--server", "--addr=:8181", "/policies"]
+          ports:
+            - containerPort: 8181
+          volumeMounts:
+            - name: policy
+              mountPath: /policies
+          readinessProbe:
+            httpGet: { path: /health, port: 8181 }
+            initialDelaySeconds: 3
+            periodSeconds: 5
+      volumes:
+        - name: policy
+          configMap:
+            name: opa-policy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opa
+  namespace: hospital
+spec:
+  selector: { app: opa }
+  ports:
+    - port: 8181
+      targetPort: 8181

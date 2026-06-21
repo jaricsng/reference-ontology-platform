@@ -20,6 +20,9 @@ from langchain_ollama import OllamaLLM
 from security import decide, run_scoped
 
 MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:7b")
+# Base URL is env-driven so the agent works both locally and in-cluster
+# (where it reaches the host's Ollama via host.k3d.internal).
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 # Schema + one-shot example. The example is what makes generation reliable —
 # zero-shot, the model hallucinates URIs like :ICU and invalid syntax.
@@ -65,7 +68,7 @@ Result rows: {rows}
 
 Answer:""")
 
-_llm = OllamaLLM(model=MODEL, temperature=0)
+_llm = OllamaLLM(model=MODEL, temperature=0, base_url=OLLAMA_BASE_URL)
 _gen_chain = GEN_PROMPT | _llm | StrOutputParser()
 _sum_chain = SUMMARISE_PROMPT | _llm | StrOutputParser()
 
