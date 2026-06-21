@@ -1,0 +1,76 @@
+@prefix :        <http://example.org/hospital#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+#  Hospital Bed & Patient Flow — Ontology (TBox)
+#
+#  Reference Ontology Platform, Module 0.
+#  Synthetic / teaching artifact. Never used with real PHI.
+#
+#  Models the domain *types* and *rules*. Instances (the ABox)
+#  live in data/hospital-data.ttl.
+#################################################################
+
+<http://example.org/hospital> a owl:Ontology ;
+    rdfs:label   "Hospital Bed & Patient Flow Ontology" ;
+    rdfs:comment "Synthetic teaching ontology for the Reference Ontology Platform (M0)." .
+
+#################################################################
+#  Classes  (the object *types*)
+#################################################################
+
+:Patient a owl:Class ;
+    rdfs:label   "Patient" ;
+    rdfs:comment "A person admitted to, or being admitted to, the hospital." .
+
+:Bed a owl:Class ;
+    rdfs:label   "Bed" ;
+    rdfs:comment "A physical bed located in exactly one ward." .
+
+:Ward a owl:Class ;
+    rdfs:label   "Ward" ;
+    rdfs:comment "A hospital ward that contains beds." .
+
+:Admission a owl:Class ;
+    rdfs:label   "Admission" ;
+    rdfs:comment "An event placing a patient into a bed (used from Module 1 onward)." .
+
+#################################################################
+#  Object properties  (the *links*)
+#################################################################
+
+:occupiesBed a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label   "occupies bed" ;
+    rdfs:comment "Links a Patient to the Bed they currently occupy. Functional: a patient occupies at most one bed." ;
+    rdfs:domain  :Patient ;
+    rdfs:range   :Bed .
+
+# Inverse of occupiesBed, so we can state a rule *about the bed*.
+:occupiedBy a owl:ObjectProperty ;
+    rdfs:label    "occupied by" ;
+    rdfs:comment  "Links a Bed to the Patient occupying it. Inverse of occupiesBed." ;
+    owl:inverseOf :occupiesBed ;
+    rdfs:domain   :Bed ;
+    rdfs:range    :Patient .
+
+:inWard a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label   "in ward" ;
+    rdfs:comment "Links a Bed to the Ward that contains it. Functional: a bed is in exactly one ward." ;
+    rdfs:domain  :Bed ;
+    rdfs:range   :Ward .
+
+#################################################################
+#  Restriction  (the *rule*)
+#
+#  A Bed is occupied by AT MOST ONE Patient (max cardinality 1).
+#  This is the domain invariant the platform must protect.
+#################################################################
+
+:Bed rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty     :occupiedBy ;
+    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+] .

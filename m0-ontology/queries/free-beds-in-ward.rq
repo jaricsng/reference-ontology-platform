@@ -1,0 +1,18 @@
+PREFIX :    <http://example.org/hospital#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Free beds in a named ward.
+# A bed is "free" when no patient occupies it.
+# Change the ward label below ("Ward A") to query a different ward.
+
+SELECT ?bed ?bedLabel
+WHERE {
+    ?ward  rdfs:label  "Ward A" .
+    ?bed   a           :Bed ;
+           :inWard      ?ward ;
+           rdfs:label   ?bedLabel .
+
+    # exclude any bed that some patient occupies
+    FILTER NOT EXISTS { ?someone :occupiesBed ?bed . }
+}
+ORDER BY ?bedLabel

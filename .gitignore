@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Data / DB artifacts
+*.db
+*.duckdb
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Downloaded tooling & runtime state (not source)
+tools/
+**/run/
+fuseki.log
+fuseki.pid
+
+# OS
+.DS_Store

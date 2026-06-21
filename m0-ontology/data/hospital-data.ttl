@@ -1,0 +1,55 @@
+@prefix :     <http://example.org/hospital#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+#################################################################
+#  Hospital Bed & Patient Flow — Instance data (ABox)
+#
+#  SYNTHETIC DATA ONLY. Obviously-fake names and IDs. No real PHI.
+#
+#  3 wards · 10 beds · 5 patients.
+#  Occupancy is set up so the "free beds in Ward A" query has a
+#  clear, checkable answer: Bed A3 and Bed A4.
+#################################################################
+
+#### Wards ######################################################
+
+:ward-icu a :Ward ; rdfs:label "ICU" .
+:ward-a   a :Ward ; rdfs:label "Ward A" .
+:ward-b   a :Ward ; rdfs:label "Ward B" .
+
+#### Patients (synthetic) #######################################
+
+:pat-001 a :Patient ; rdfs:label "Test Patient Alpha (SYN-001)" .
+:pat-002 a :Patient ; rdfs:label "Test Patient Bravo (SYN-002)" .
+:pat-003 a :Patient ; rdfs:label "Test Patient Charlie (SYN-003)" .
+:pat-004 a :Patient ; rdfs:label "Test Patient Delta (SYN-004)" .
+:pat-005 a :Patient ; rdfs:label "Test Patient Echo (SYN-005)" .
+
+#### Beds  (each in exactly one ward) ###########################
+
+# Ward A — 4 beds
+:bed-a1 a :Bed ; rdfs:label "Bed A1" ; :inWard :ward-a .
+:bed-a2 a :Bed ; rdfs:label "Bed A2" ; :inWard :ward-a .
+:bed-a3 a :Bed ; rdfs:label "Bed A3" ; :inWard :ward-a .
+:bed-a4 a :Bed ; rdfs:label "Bed A4" ; :inWard :ward-a .
+
+# Ward B — 3 beds
+:bed-b1 a :Bed ; rdfs:label "Bed B1" ; :inWard :ward-b .
+:bed-b2 a :Bed ; rdfs:label "Bed B2" ; :inWard :ward-b .
+:bed-b3 a :Bed ; rdfs:label "Bed B3" ; :inWard :ward-b .
+
+# ICU — 3 beds
+:bed-icu1 a :Bed ; rdfs:label "Bed ICU-1" ; :inWard :ward-icu .
+:bed-icu2 a :Bed ; rdfs:label "Bed ICU-2" ; :inWard :ward-icu .
+:bed-icu3 a :Bed ; rdfs:label "Bed ICU-3" ; :inWard :ward-icu .
+
+#### Occupancy  (Patient occupiesBed Bed) #######################
+#  Occupied: A1, A2, B1, ICU-1, ICU-2
+#  Free:     A3, A4, B2, B3, ICU-3
+#  => Ward A free beds: A3, A4
+
+:pat-001 :occupiesBed :bed-a1 .
+:pat-002 :occupiesBed :bed-a2 .
+:pat-003 :occupiesBed :bed-b1 .
+:pat-004 :occupiesBed :bed-icu1 .
+:pat-005 :occupiesBed :bed-icu2 .
