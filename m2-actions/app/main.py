@@ -45,8 +45,10 @@ def health():
 @app.get("/beds")
 def beds(ward: str | None = None):
     """Current bed occupancy. (Module 3 will scope this per role.)"""
+    # `ward` is untrusted input — escape it as a SPARQL literal (see _q) to
+    # avoid query injection.
     flt = 'FILTER(?ward = ?wardFilter)' if ward else ""
-    binding = f'VALUES ?wardFilter {{ "{ward}" }}' if ward else ""
+    binding = f'VALUES ?wardFilter {{ {_q(ward)} }}' if ward else ""
     rows = select(f"""
         SELECT ?bedCode ?ward ?occupantUri ?occupantName WHERE {{
             {binding}
@@ -137,5 +139,7 @@ def audit_tail(n: int = 10):
 
 
 def _q(s: str) -> str:
-    """Quote a string literal for SPARQL."""
-    return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
+    """Quote/escape a string as a SPARQL string literal (injection-safe)."""
+    s = (s.replace("\\", "\\\\").replace('"', '\\"')
+          .replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t"))
+    return f'"{s}"'
