@@ -4,7 +4,7 @@ metadata:
   name: action-api
   namespace: hospital
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels: { app: action-api }
   template:
