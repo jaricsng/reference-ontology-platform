@@ -6,3 +6,6 @@ langchain-community>=0.3
 langchain-ollama>=0.2
 rdflib>=7,<8
 requests>=2.31
+# server.py (HTTP wrapper used by the M5 app / M6 container)
+fastapi>=0.110
+uvicorn[standard]>=0.29

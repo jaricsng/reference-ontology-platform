@@ -51,9 +51,11 @@ spec:
     spec:
       containers:
         - name: opa
-          image: openpolicyagent/opa:latest-rootless
+          image: openpolicyagent/opa:1.17.1
           imagePullPolicy: IfNotPresent
-          args: ["run", "--server", "--addr=:8181", "/policies"]
+          # Point at explicit files, not the /policies dir: a ConfigMap mount
+          # exposes ..data symlinks that would otherwise load the policy 3x.
+          args: ["run", "--server", "--addr=:8181", "/policies/authz.rego", "/policies/data.json"]
           ports:
             - containerPort: 8181
           volumeMounts:
