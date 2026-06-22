@@ -23,6 +23,9 @@ tools/
 fuseki.log
 fuseki.pid
 
+# Claude Code local machine state (paths, per-machine permission allowlist)
+.claude/settings.local.json
+
 # OS
 .DS_Store
 

@@ -8,6 +8,15 @@ platform, built one stack layer at a time. The running domain is **Hospital Bed
 > It demonstrates every architectural layer end-to-end on one laptop. It is not
 > built for scale, concurrency, real auth, or live integrations. The capstone
 > makes that gap an explicit, assessed outcome.
+>
+> **Security note — do not copy these patterns into production:**
+> - **No authentication.** Identity is a plain string passed with each request
+>   (`user: "manager_carol"`); any caller can claim any role. The Module 3 OPA
+>   policy is an *illustrative* authorization model, not real authn.
+> - **No PHI, ever.** All data is obviously-fake synthetic data (`SYN-P00001`,
+>   "Test Patient Alpha"). Never load real patient data into this lab.
+> - **Run it locally only.** Fuseki is started with update enabled and no auth —
+>   do not expose its endpoint (`:3030`) or the APIs to an untrusted network.
 
 Full lab spec: [`docs/mini_foundry_lab.md`](docs/mini_foundry_lab.md).
 Build context & rules: [`CLAUDE.md`](CLAUDE.md).
