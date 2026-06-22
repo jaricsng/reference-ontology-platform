@@ -57,7 +57,7 @@ the host — putting a 4.7GB model in-cluster isn't worth it on a laptop.
 # 2. build + import the images
 ./m6-infra/build-images.sh
 
-# 3. tell Argo CD to deploy from Git (private repo needs a repo credential)
+# 3. tell Argo CD to deploy from Git (public repo — no credential needed)
 kubectl apply -f m6-infra/argocd/application.yaml
 
 # 4. load synthetic data into the in-cluster Fuseki
@@ -67,16 +67,19 @@ kubectl apply -f m6-infra/argocd/application.yaml
 kubectl -n hospital port-forward svc/app 3000:3000   # http://localhost:3000
 ```
 
-For a **private** repo, create the Argo CD repo credential first:
+This repo is public, so Argo CD clones it anonymously — no credential needed.
 
-```bash
-kubectl -n argocd create secret generic repo-hospital \
-  --from-literal=type=git \
-  --from-literal=url=https://github.com/<you>/reference-ontology-platform.git \
-  --from-literal=username=<you> \
-  --from-literal=password=$(gh auth token)
-kubectl -n argocd label secret repo-hospital argocd.argoproj.io/secret-type=repository
-```
+> **If you fork into a *private* repo**, create an Argo CD repo credential first
+> (run before step 3 above):
+>
+> ```bash
+> kubectl -n argocd create secret generic repo-hospital \
+>   --from-literal=type=git \
+>   --from-literal=url=https://github.com/<you>/reference-ontology-platform.git \
+>   --from-literal=username=<you> \
+>   --from-literal=password=$(gh auth token)
+> kubectl -n argocd label secret repo-hospital argocd.argoproj.io/secret-type=repository
+> ```
 
 ## How to verify
 
