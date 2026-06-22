@@ -176,6 +176,15 @@ kubectl apply -f m6-infra/argocd/application.yaml
 kubectl -n hospital port-forward svc/app 3000:3000      # http://localhost:3000
 ```
 
+> **Already created the cluster before (e.g. after a Docker/laptop restart)?**
+> `cluster-up.sh` fails with *"a cluster with that name already exists"*. Don't
+> recreate it — **start** the stopped cluster and reload data instead:
+> ```bash
+> k3d cluster start hospital
+> kubectl -n argocd rollout status deploy/argocd-server --timeout=180s
+> ./m6-infra/load-data.sh        # in-cluster Fuseki is in-memory; reload after any restart
+> ```
+
 **Verify the GitOps loop:**
 
 ```bash
@@ -184,8 +193,16 @@ kubectl -n argocd get application hospital-platform \
   -o jsonpath='{.status.sync.status} {.status.health.status}{"\n"}'   # Synced Healthy
 ```
 
-Change a manifest (e.g. bump a replica count), commit, and push — Argo CD
-reconciles the cluster to match Git automatically.
+**Self-heal demo (no commit needed)** — manually drift from Git and watch Argo
+CD revert it:
+
+```bash
+kubectl -n hospital scale deploy/action-api --replicas=3   # diverge from Git (replicas: 1)
+kubectl -n hospital get deploy action-api -w               # Argo restores it to 1 within seconds
+```
+
+Or the commit-driven version: change a manifest (e.g. bump a replica count),
+commit, and push — Argo CD reconciles the cluster to match Git automatically.
 
 ---
 
@@ -200,3 +217,6 @@ reconciles the cluster to match Git automatically.
 | M4 agent slow or empty answers | First run is slow while the model loads; confirm `ollama serve` is up and `qwen2.5-coder:7b` is pulled. |
 | Triple counts look wrong / app shows stale data | Re-run `./m1-ingestion/run.sh` to rebuild the dataset. |
 | `port already in use` | Another instance is still running on 3030 / 8000 / 8002 / 8181 / 3000 — stop it first. |
+| (M6) `cluster with that name already exists` | The cluster exists but is stopped — run `k3d cluster start hospital`, not `cluster-up.sh`. |
+| (M6) app's AI panel says *"agent service is not running"* | Right after a cluster start, give CoreDNS a moment so the agent pod can resolve `host.k3d.internal`; confirm host `ollama serve` is up, then retry. |
+| (M6) app shows no/zero beds | In-cluster Fuseki is in-memory — re-run `./m6-infra/load-data.sh` after any Fuseki pod or cluster restart. |
