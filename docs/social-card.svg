@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" font-family="-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1c2b45" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="780" fill="#ffffff"/>
+  <rect width="1200" height="10" fill="#7aa2e3"/>
+
+  <!-- header -->
+  <text x="40" y="62" font-size="34" font-weight="700" fill="#1c2b45">Reference Ontology Platform</text>
+  <text x="40" y="92" font-size="17" fill="#5a6b85">An ontology-driven operational data platform — built end-to-end, one layer at a time, on a laptop.</text>
+
+  <!-- flow chevrons (request flows down through the governed core) -->
+  <g stroke="#c2cad8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M594 209 l6 6 l6 -6"/>
+    <path d="M594 313 l6 6 l6 -6"/>
+    <path d="M594 383 l6 6 l6 -6"/>
+    <path d="M594 507 l6 6 l6 -6"/>
+  </g>
+
+  <!-- ============ M5 Application (full) ============ -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="135" width="1120" height="70" rx="12" fill="#eef4ff" stroke="#7aa2e3"/>
+  </g>
+  <rect x="58" y="154" width="44" height="22" rx="11" fill="#5b8fd6"/>
+  <text x="80" y="170" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">M5</text>
+  <text x="118" y="167" font-size="19" fill="#1c2b45"><tspan font-weight="700">Application</tspan><tspan fill="#5a6b85" font-size="16">  ·  Next.js + TypeScript</tspan></text>
+  <text x="118" y="190" font-size="13.5" fill="#45556e">Live operational dashboard — role-scoped bed grid, admit / discharge, and a natural-language ask box.</text>
+
+  <!-- ============ M2 Validated Actions (half-left) ============ -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="219" width="550" height="90" rx="12" fill="#fff4e6" stroke="#f0b67f"/>
+  </g>
+  <rect x="58" y="239" width="44" height="22" rx="11" fill="#e0954e"/>
+  <text x="80" y="255" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">M2</text>
+  <text x="118" y="256" font-size="19" fill="#5a3a14"><tspan font-weight="700">Validated Actions</tspan><tspan fill="#8a6a3a" font-size="16">  ·  SHACL + FastAPI</tspan></text>
+  <text x="118" y="279" font-size="13.5" fill="#5a4422">Guarded writes: validate → authorize →</text>
+  <text x="118" y="298" font-size="13.5" fill="#5a4422">write → audit. Bad writes are blocked.</text>
+
+  <!-- ============ M4 AI Layer (half-right) ============ -->
+  <g filter="url(#shadow)">
+    <rect x="610" y="219" width="550" height="90" rx="12" fill="#eafaf1" stroke="#74c69d"/>
+  </g>
+  <rect x="628" y="239" width="44" height="22" rx="11" fill="#4fae7e"/>
+  <text x="650" y="255" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">M4</text>
+  <text x="688" y="256" font-size="19" fill="#1b3a2b"><tspan font-weight="700">AI Layer</tspan><tspan fill="#3f7a5c" font-size="16">  ·  LangChain + local LLM</tspan></text>
+  <text x="688" y="279" font-size="13.5" fill="#234c39">Natural language → SPARQL, grounded in</text>
+  <text x="688" y="298" font-size="13.5" fill="#234c39">real data, behind the same security filter.</text>
+
+  <!-- ============ M3 Dynamic Security (full, cross-cutting) ============ -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="323" width="1120" height="56" rx="12" fill="#fdeef1" stroke="#e58da0"/>
+  </g>
+  <rect x="58" y="338" width="44" height="22" rx="11" fill="#d96b82"/>
+  <text x="80" y="354" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">M3</text>
+  <text x="118" y="345" font-size="19" fill="#5a1f2b"><tspan font-weight="700">Dynamic Security</tspan><tspan fill="#8a4a58" font-size="16">  ·  Open Policy Agent (OPA)</tspan></text>
+  <text x="118" y="366" font-size="13.5" fill="#6a2c39">Per-role, per-object access control as policy-as-data — applied to both the API and the AI.</text>
+
+  <!-- ============ M0 + M1 Semantic Core and Ingestion (full) ============ -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="393" width="1120" height="110" rx="12" fill="#fff0f6" stroke="#e69ec4"/>
+  </g>
+  <rect x="58" y="416" width="68" height="22" rx="11" fill="#d57aa8"/>
+  <text x="92" y="432" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">M0 · M1</text>
+  <text x="142" y="433" font-size="19" font-weight="700" fill="#5a2240">Semantic Core and Ingestion</text>
+  <text x="142" y="459" font-size="16" fill="#8a4a6c">OWL/RDF + Apache Jena Fuseki   ◀   dbt + DuckDB  (staging → marts)</text>
+  <text x="142" y="484" font-size="13.5" fill="#6a3050">A formal domain ontology with reasoning; synthetic data transformed with visible lineage into one governed triplestore.</text>
+
+  <!-- ============ M6 Delivery (substrate, full) ============ -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="517" width="1120" height="70" rx="12" fill="#eef9fb" stroke="#7ec8d6"/>
+  </g>
+  <rect x="58" y="536" width="44" height="22" rx="11" fill="#4aa7b8"/>
+  <text x="80" y="552" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">M6</text>
+  <text x="118" y="549" font-size="19" fill="#13404a"><tspan font-weight="700">Delivery</tspan><tspan fill="#3a7c89" font-size="16">  ·  k3d (Kubernetes) + Argo CD</tspan></text>
+  <text x="118" y="572" font-size="13.5" fill="#1c5460">Every component containerised and reconciled from Git by Argo CD — GitOps: a commit deploys, the cluster self-heals.</text>
+
+  <!-- footer -->
+  <line x1="40" y1="618" x2="1160" y2="618" stroke="#e3e8f0" stroke-width="1"/>
+  <text x="40" y="646" font-size="14" fill="#45556e"><tspan font-weight="700" fill="#1c2b45">Learning prototype</tspan> · synthetic data only · free &amp; open-source · runs on one laptop (~30 hrs)</text>
+  <text x="40" y="670" font-size="14" fill="#45556e"><tspan font-weight="700" fill="#54501a">Capstone:</tspan> swap dbt/DuckDB for Spark — identical output, proving the logic was portable.</text>
+  <text x="600" y="724" font-size="17" font-weight="700" fill="#2563c9" text-anchor="middle">github.com/jaricsng/reference-ontology-platform</text>
+</svg>
