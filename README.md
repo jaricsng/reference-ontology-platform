@@ -159,5 +159,9 @@ tools/                      downloaded binaries (Fuseki) — gitignored
 
 ## Getting started
 
-Start with [M0](m0-ontology/README.md). Each subsequent module builds on the
-live triplestore from M0.
+- **Just want to run and test the finished platform?** See the
+  [**RUNBOOK**](RUNBOOK.md) — prerequisites, ordered startup, how to use the app,
+  and the full test suite in one place (plus the Kubernetes/GitOps path).
+- **Want to understand how it was built, layer by layer?** Start with
+  [M0](m0-ontology/README.md); each module builds on the live triplestore from M0
+  and has its own run + verify steps.
