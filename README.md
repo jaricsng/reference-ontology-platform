@@ -72,6 +72,31 @@ LLM) and M6 (k3d) want Docker. You can also do just the modules you care about �
 each builds on the live triplestore from the one before. To run and test the
 finished build, see the [**RUNBOOK**](RUNBOOK.md).
 
+## How this compares to other resources
+
+There are excellent resources for each *slice* of this stack — but I'm not aware
+of another guided, runnable lab that integrates *all* of them around one domain,
+from modelling through Kubernetes delivery. Linking the alternatives honestly:
+
+| Resource | Covers | Doesn't cover (vs this lab) |
+|---|---|---|
+| [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp) (free, ~9 wk) | Pipelines/warehouse: Docker, dbt, Spark, Kafka, capstone | Ontology, validated write-actions, policy security, AI query layer, GitOps/K8s. It's a *data-pipeline* course, not an *operational platform*. |
+| [Palantir's Ontology course](https://www.palantir.com/docs/foundry/ontology/overview) | The object/link/action model **inside Foundry** | The open-tool *implementation* — you can't run it without the product, or see how the layers are actually built. |
+| Open-source Foundry-ontology projects (e.g. [ontobricks](https://github.com/databrickslabs/ontobricks)) | Ontology modelling + auto-generated APIs | A guided lab structure, plus the security, grounded-AI, and GitOps layers. These are *tools*, not courses. |
+| Ontology / SHACL tutorials (e.g. [Knublauch](https://www.linkedin.com/pulse/ontology-modeling-shacl-getting-started-holger-knublauch-iwlrf), [OntologyTutorial](https://github.com/subhashishhh/OntologyTutorial)) | Modelling + validation (M0/M2 concepts) | Everything downstream: pipeline, actions, security, AI, app, deploy. |
+| Text-to-SPARQL / KG+LLM guides & papers (e.g. [SPARQL-LLM](https://devnavigator.com/2025/12/19/sparql-llm-knowledge-graph-queries/), [arXiv 2410.06062](https://arxiv.org/abs/2410.06062)) | Grounded NL→query (M4) — and they confirm the lab's approach (schema grounding + query validation) is current best practice | The surrounding stack; these are AI-layer-only, often research-grade rather than a full build. |
+
+**What only this lab gives you, integrated:** the *kinetic* layer (validated
+write-actions, not just reads), per-object **policy-as-data security** applied to
+*both* the API and the AI, all seven layers on one domain, and a capstone that
+makes you state *what this is NOT* and reason about build-vs-buy.
+
+**When to pick something else (and pair them).** Want production-depth pipelines?
+Do the Zoomcamp. Need to learn Foundry *the product*? Do Palantir's course. Want
+state-of-the-art text-to-SPARQL? Read the papers. They pair well: use this lab
+for *architecture breadth and the operational/AI/security integration*, then go
+deep on whichever slice your target role emphasises.
+
 ## Architecture
 
 **Runtime request flow** — a clinician's action travels through the app, the
