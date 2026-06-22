@@ -21,6 +21,57 @@ platform, built one stack layer at a time. The running domain is **Hospital Bed
 Full lab spec: [`docs/mini_foundry_lab.md`](docs/mini_foundry_lab.md).
 Build context & rules: [`CLAUDE.md`](CLAUDE.md).
 
+## Why do these labs?
+
+Most tutorials teach **one** slice of a data platform — a dbt project, an API, a
+policy engine, an LLM agent — in isolation. The rare and valuable thing is seeing
+how the layers *fit together* around one coherent domain: how a formal model
+becomes an enforceable write, how access control threads through both the API and
+the AI, how the same logic deploys as pods via GitOps. That whole-stack
+integration is the architecture behind expensive enterprise platforms (e.g.
+Palantir Foundry and other knowledge-graph / operational-intelligence systems) —
+here you build a small one yourself, end to end, on one laptop.
+
+**Who it's for.** Aspiring or practising **data / platform engineers, knowledge-
+graph & ontology engineers, ML/AI engineers, backend engineers, and solutions
+architects** — including anyone eyeing forward-deployed / solutions roles at
+platform vendors. Prerequisites are light: basic Python, basic SQL, and comfort
+with a terminal and Git. No prior semantic-web or Kubernetes experience needed.
+
+**What you'll gain.**
+
+- **Breadth that's rare and hireable** — you'll have touched modelling *through*
+  deployment on one system, not just one tool in isolation.
+- **Transferable mental models** — the *validate → write → log* guarded-action
+  pattern; open-world model (OWL) vs closed-world enforcement (SHACL);
+  policy-as-data outside app code; grounding an LLM against a schema so it can't
+  hallucinate; GitOps self-heal.
+- **Judgment, not just tools** — the capstone makes you state *what this is NOT*
+  and reason about build-vs-buy, which is what separates an engineer from a
+  tutorial-follower.
+- **A portfolio artifact with honest framing** — see
+  [`docs/portfolio_interview_guide.md`](docs/portfolio_interview_guide.md) for
+  defensible CV claims and interview Q&A.
+
+**Where the knowledge applies.** The domain is hospital bed flow, but every
+pattern is domain-agnostic:
+
+| Skill you build | Applies to |
+|---|---|
+| Ontology / knowledge-graph modelling (M0) | Master data, digital twins, supply-chain & asset graphs, fraud rings |
+| ELT + lineage (M1) | Any analytics / data-platform team (dbt is industry standard) |
+| Validated write-actions (M2) | Operational apps that safely *change* state — dispatch, order mgmt, clinical/industrial ops |
+| Policy-based access control (M3) | Multi-tenant SaaS, object/row-level security, regulated data |
+| Grounded NL→query AI (M4) | "Chat with your data", internal copilots, agentic analytics — without hallucination |
+| Operational dashboard (M5) | Internal tools / control panels over live data |
+| Containers + GitOps (M6) | Modern DevOps / platform-engineering delivery on Kubernetes |
+
+**Time & cost.** ~30 hours total (M0, M2, M4 are the conceptual peaks worth the
+most time). Everything is free/open-source and runs on one machine; M4 (local
+LLM) and M6 (k3d) want Docker. You can also do just the modules you care about —
+each builds on the live triplestore from the one before. To run and test the
+finished build, see the [**RUNBOOK**](RUNBOOK.md).
+
 ## Architecture
 
 **Runtime request flow** — a clinician's action travels through the app, the
